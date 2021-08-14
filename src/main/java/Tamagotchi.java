@@ -1,63 +1,131 @@
 public class Tamagotchi {
     
 
+    private final int energiaMax;
+
+    private final int saciedadeMax;
+
+    private final int limpezaMax;
+
+    private final int idadeMax;
+
+    private int energiaAtual;
+
+    private int saciedadeAtual;
+
+    private int limpezaAtual;
+
+    private int idadeAtual=0;
+
+    private int diamantes=0;
+
+    private boolean estaVivo=true;
+
     public Tamagotchi(int energiaMax, int saciedadeMax, int limpezaMax, int idadeMax){
+        this.energiaMax=energiaMax;
+        energiaAtual=energiaMax;
+        this.saciedadeMax=saciedadeMax;
+        saciedadeAtual=saciedadeMax;
+        this.limpezaMax=limpezaMax;
+        limpezaAtual=limpezaMax;
+        this.idadeMax=idadeMax;
     }
 
     public int getEnergiaMax() {
-        return -1;
+        return energiaMax;
     }
 
     public int getSaciedadeMax() {
-        return -1;
+        return saciedadeMax;
     }
 
     public int getLimpezaMax() {
-        return -1;
+        return limpezaMax;
     }
 
     public int getIdadeMax() {
-        return -1;
+        return idadeMax;
     }
 
     public int getEnergiaAtual() {
-        return -1;
+        return energiaAtual;
     }
 
     public int getSaciedadeAtual() {
-        return -1;
+        return saciedadeAtual;
     }
 
     public int getLimpezaAtual() {
-        return -1;
+        return limpezaAtual;
     }
 
     public int getIdadeAtual() {
-        return -1;
+        return idadeAtual;
     }
 
     public int getDiamantes() {
-        return -1;
+        return diamantes;
     }
 
     public boolean getEstaVivo(){
-        return true;
+        return estaVivo;
     }
 
     public boolean brincar(){
-        return true;
+        if(estaVivo){
+            energiaAtual=Math.max(energiaAtual-2,0);
+            saciedadeAtual=Math.max(saciedadeAtual-1,0);
+            limpezaAtual=Math.max(limpezaAtual-3,0);
+            idadeAtual=Math.min(idadeAtual+1,idadeMax);
+            diamantes++;
+            if(energiaAtual==0||saciedadeAtual==0||limpezaAtual==0||idadeAtual==idadeMax)
+                estaVivo=false;
+            return true;
+        }
+        else
+            return false;
     }
 
     public boolean comer(){
-        return true;
+        if(estaVivo){
+            energiaAtual=Math.max(energiaAtual-1,0);
+            saciedadeAtual=Math.min(saciedadeAtual+4,saciedadeMax);
+            limpezaAtual=Math.max(limpezaAtual-2,0);
+            idadeAtual=Math.min(idadeAtual+1,idadeMax);
+            if(energiaAtual==0||saciedadeAtual==0||limpezaAtual==0||idadeAtual==idadeMax)
+                estaVivo=false;
+            return true;
+        }
+        else
+            return false;
     }
 
     public boolean dormir(){
-        return true;
+        if(estaVivo&&energiaAtual<=energiaMax-5){
+            int turnos=energiaMax-energiaAtual;
+            energiaAtual=energiaMax;
+            saciedadeAtual=Math.max(saciedadeAtual-2,0);
+            idadeAtual=Math.min(idadeAtual+turnos,idadeMax);
+            if(energiaAtual==0||saciedadeAtual==0||limpezaAtual==0||idadeAtual==idadeMax)
+                estaVivo=false;
+            return true;
+        }
+        else
+            return false;
     }
 
     public boolean banhar(){
-        return true;
+        if(estaVivo){
+            energiaAtual=Math.max(energiaAtual-3,0);
+            saciedadeAtual=Math.max(saciedadeAtual-1,0);
+            limpezaAtual=limpezaMax;
+            idadeAtual=Math.min(idadeAtual+2,idadeMax);
+            if(energiaAtual==0||saciedadeAtual==0||limpezaAtual==0||idadeAtual==idadeMax)
+                estaVivo=false;
+            return true;
+        }
+        else
+            return false;
     }
 
 }
